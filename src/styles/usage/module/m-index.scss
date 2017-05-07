@@ -16,15 +16,7 @@
   section{
     @include flex(1);
     width: 100%;
-    .mint-swipe{
-      height: 1.9rem;
-      .mint-swipe-item{
-        background: red;
-        img{
-          width: 100%;
-        }
-      }
-    }
+    
   }
   nav{
     height: .5rem;

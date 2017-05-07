@@ -13,7 +13,7 @@
     </div>
     <mt-swipe :auto="6000">
       <mt-swipe-item v-for="(item,index) in dataSource" :keys='index'>
-        <img :src="item.images.large" alt="">
+        <img :src="item.goods_thumb" alt="">
       </mt-swipe-item>
     </mt-swipe>
   </div>
@@ -36,12 +36,25 @@
     mounted:function(){
       let that = this;
       axiosUtil.get({
-        url:'api/v2/movie/in_theaters?count=10',
+        url:'api/goods/homeGoods',
         type:'get',
         callback:(res)=>{
-          that.dataSource = this.dataSource.concat(res.data.subjects)
+          that.dataSource = this.dataSource.concat(res.data.body.datas)
         }
       })
     }
   }
 </script>
+
+<style scoped lang='scss'>
+.mint-swipe{
+  height: 1.9rem;
+  .mint-swipe-item{
+    background: red;
+    img{
+      width: 100%;
+    }
+  }
+}
+
+</style>
