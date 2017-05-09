@@ -4,6 +4,7 @@ import Index from '@/scripts/components/m-index'
 import Board from '@/scripts/components/Board'
 import Search from '@/scripts/components/Search'
 import EnterNote from '@/scripts/components/EnterNote'
+import Login from '@/scripts/components/Login'
 import MyInfor from '@/scripts/components/MyInfor'
 Vue.use(Router)
 
@@ -29,6 +30,10 @@ export default new Router({
         {
           path:'/myinfo',
           component:MyInfor
+        },
+        {
+          path:'/login',
+          component:Login
         }
       ]
     }

@@ -17,6 +17,7 @@ body{
   section{
     @include flex(1);
     width: 100%;
+    background: #efefef;
     overflow-y: scroll;
   }
   nav{

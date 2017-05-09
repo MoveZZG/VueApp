@@ -5,7 +5,7 @@
     </header>
     <div class="c-type">
       <div class="category" v-for="(item,index) in dataSource.categorys" v-bind:key="index">
-        <router-link to="/home">
+        <router-link to="/lists">
           <a><img :src="item.cat_img" alt=""></a>
         </router-link>
       </div>
