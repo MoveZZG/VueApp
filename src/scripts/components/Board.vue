@@ -60,6 +60,7 @@
          </router-link>
         </div>
       </section>
+      <good-list notloading="true" uri=""></good-list>
     </mt-loadmore>
   </div>
 </template>
@@ -70,6 +71,8 @@
   import axiosUtil from '../utils/axios';
   import { Loadmore } from 'mint-ui';
   import { Indicator } from 'mint-ui';
+  import GoodList from './GoodList.vue'
+  Vue.component('good-list', GoodList)
   Vue.component(Swipe.name, Swipe);
   Vue.component(SwipeItem.name, SwipeItem);
   Vue.component(Loadmore.name, Loadmore);
