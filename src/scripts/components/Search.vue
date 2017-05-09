@@ -5,19 +5,24 @@
     </header>
     <div class="c-type">
       <div class="category" v-for="(item,index) in dataSource.categorys" v-bind:key="index">
-        <img :src="item.cat_img" alt="">
+        <router-link to="/lists">
+          <a><img :src="item.cat_img" alt=""></a>
+        </router-link>
       </div>
     </div>
     <div class="c-type1">
       <div class="tags" v-for="(item,index) in dataSource.tags" v-bind:key="index">
-        <img :src="item.tag_img" alt="">
+        <router-link to="/home">
+          <a><img :src="item.tag_img" alt=""></a>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import Vue from 'vue';
+import SearchList from './SearchList.vue';
+Vue.component('search-list',SearchList);
 import axiosUtil from '../utils/axios';
 export default {
   data(){
@@ -37,7 +42,6 @@ export default {
   }
 }
 </script>
-
 <style scoped lang="scss">
   .yo-header{
       height:.46rem;
@@ -49,7 +53,7 @@ export default {
       border:none;
       text-align: center;
       line-height:.28rem;
-      width:3.6rem;
+      width:96%;
       height:.28rem;
       margin-top:.07rem;
       border-radius:.1rem;
@@ -65,28 +69,25 @@ export default {
   }
   .c-type{
     margin-top:.18rem;
-    height:3.4rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
     .category{
-      padding-top:.25rem;
-      float: left;
-      padding:.06rem .05rem;
+      width:30.7%;
+      padding-top:.1rem;
       img{
-        width:1.15rem;
-        height:1.51rem;
+        width:100%;
         float: left;
       }
     }
   }
   .c-type1{
-    padding-top:.18rem;
+    padding-top:.3rem;
     .tags{
       width: 100%;
-      height:1.86rem;
       img{
         width:100%;
-        height:100%;
       }
     }
   }
-
 </style>
