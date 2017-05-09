@@ -32,7 +32,7 @@ module.exports = {
         target:'http://api.sijiweihuo.com/app/',
         changeOrigin:true,
         pathRewrite:{
-          '/api':''
+          '^/api':''
         }
       }
     },
