@@ -46,7 +46,7 @@ export default new Router({
     },
     {
       path: '/chart/:title',
-      component: SearchList,
+      component: SearchList
     }
   ]
 })
