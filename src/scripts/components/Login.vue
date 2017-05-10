@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="m-login">
     <header class="login-logo">
-      <span><img src="../../../static/details_close_1_icon.png" alt=""/></span>
+      <span><img src="../../../static/images/details_close_1_icon.png" alt=""/></span>
     </header>
 
   </div>
