@@ -18,7 +18,7 @@
         <span>信息</span>
       </div>
     </div>
-    <mt-loadmore v-if="hasdata" :top-method="loadTop" :topDropText="'释放刷新'"  :bottom-all-loaded="allLoaded" :autoFill="false" ref="loadmore">
+    <mt-loadmore v-if="hasdata" :top-method="loadTop" :bottom-method="loadTop" :topDropText="'释放刷新'"  :bottom-all-loaded="allLoaded" :autoFill="false" ref="loadmore">
       <section class="banner">
         <div  v-for="(item,index) in dataSource.ads" >
           <router-link  :to="item.ad_url">

@@ -5,6 +5,8 @@ import Board from '@/scripts/components/Board'
 import Search from '@/scripts/components/Search'
 import EnterNote from '@/scripts/components/EnterNote'
 import Login from '@/scripts/components/Login'
+import Register from '@/scripts/components/Register'
+import Lists from '@/scripts/components/Lists'
 import MyInfor from '@/scripts/components/MyInfor'
 Vue.use(Router)
 
@@ -13,7 +15,7 @@ export default new Router({
     {
       path: '/',
       component: Index,
-      redirect:'/board',
+      redirect:'board',
       children:[
         {
           path:'/board',
@@ -30,12 +32,17 @@ export default new Router({
         {
           path:'/myinfo',
           component:MyInfor
-        },
-        {
-          path:'/login',
-          component:Login
         }
       ]
+    },{
+      path:'/login',
+      component:Login
+    },{
+      path:'/register',
+      component:Register
+    },{
+      path:'/lists/:title/id/:id',
+      component:Lists
     }
   ]
 })

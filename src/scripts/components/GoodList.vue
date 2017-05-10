@@ -1,8 +1,6 @@
 <template lang="html">
   <section class="goodList">
-    <ul class="note-list" v-if="isShow" v-infinite-scroll="loadMore"
-      infinite-scroll-disabled="notloading"
-      infinite-scroll-distance="10">
+    <ul class="note-list" v-if="isShow" >
       <li v-for="(item,index) in dataSource" v-bind:key="index">
         <div class="goods-img"><img :src="item.goods_thumb" alt=""></div>
         <div class="goods-info">
@@ -29,29 +27,16 @@
 <script>
 import Vue from 'vue';
 import axiosUtil from '../utils/axios.js';
-import { InfiniteScroll } from 'mint-ui';
 import { Spinner } from 'mint-ui';
 Vue.component(Spinner.name, Spinner);
-Vue.use(InfiniteScroll);
 export default {
   data(){
     return{
       isShow:false,
-      list:[1,2,3],
       dataSource:[]
     }
   },
   props: ['notloading', 'uri'],
-  methods:{
-    loadMore() {
-      this.loading = true;
-      setTimeout(() => {
-        for (let i = 1; i <= 10; i++) {
-        }
-        this.loading = false;
-      }, 2500);
-    }
-  },
   mounted:function(){
     let that=this;
     axiosUtil.get({

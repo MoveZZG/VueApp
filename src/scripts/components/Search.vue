@@ -1,18 +1,17 @@
 <template lang="html">
   <div class="search">
-    <header class="yo-header">
+    <header class="yo-header-a">
         <span class="yo-ico">&#xe511;</span><input type="text" name="" value="" placeholder="搜索商品" >
     </header>
     <div class="c-type">
       <div class="category" v-for="(item,index) in dataSource.categorys" v-bind:key="index">
-        <router-link to="/lists">
-          <a><img :src="item.cat_img" alt=""></a>
+          <a @click="sea(item)" ><img :src="item.cat_img" alt=""></a>
         </router-link>
       </div>
     </div>
     <div class="c-type1">
       <div class="tags" v-for="(item,index) in dataSource.tags" v-bind:key="index">
-        <router-link to="/home">
+        <router-link :to="`/lists/${item.tag_words}/id/${item.tag_id}`">
           <a><img :src="item.tag_img" alt=""></a>
         </router-link>
       </div>
@@ -23,11 +22,26 @@
 import Vue from 'vue';
 import SearchList from './SearchList.vue';
 Vue.component('search-list',SearchList);
+import { Toast } from 'mint-ui';
 import axiosUtil from '../utils/axios';
 export default {
   data(){
     return{
       dataSource:{}
+    }
+  },
+  methods:{
+    sea:function(item){
+      console.log(item.goods_count);
+      if(item.goods_count==0){
+        Toast({
+          message: '抱歉您所选的内容暂时未开放！',
+          position: 'bottom',
+          duration: 2000
+          });
+      }else{
+        window.location.href=`#/lists/${item.cat_name}/id/${item.cat_id}`
+      }
     }
   },
   mounted:function(){
@@ -39,15 +53,20 @@ export default {
         that.dataSource=res.data.body;
       }
     })
-  }
+  },
+
 }
 </script>
 <style scoped lang="scss">
-  .yo-header{
+  .yo-header-a{
+      width:100%;
       height:.46rem;
       background:#fff;
       border-bottom: .02rem solid #ddd;
-      position: relative;
+      position: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     input{
       background:#f4f4f4;
       border:none;
@@ -55,20 +74,23 @@ export default {
       line-height:.28rem;
       width:96%;
       height:.28rem;
-      margin-top:.07rem;
       border-radius:.1rem;
       font-size:.14rem;
       color:#87878c;
       font-family: "宋体";
+      position: relative;
     }
     .yo-ico{
       color:#87878c;
       position: absolute;
-      left:1.4rem;
+      left:36%;
+      line-height: .46rem;
+      z-index:1;
     }
   }
   .c-type{
-    margin-top:.18rem;
+    padding-top:.54rem;
+    background:#fff;
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
