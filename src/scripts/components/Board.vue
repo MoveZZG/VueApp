@@ -1,6 +1,5 @@
 <template lang="html">
-  <div class="">
-
+  <div id="content" >
     <div class="yo-header-index">
       <div class="regret flc">
         <span class="yo-ico">&#xe622;</span>
@@ -10,7 +9,7 @@
           <div class="sousuo">
               <span class="yo-ico">&#xe511;</span>
           </div>
-          <input type="text" name="" value="" placeholder="搜索">
+          <router-link to="/Sousuo"><input type="text" name="" value="" placeholder="搜索"></router-link>
           <span class="yo-ico">&#xe617;</span>
       </h2>
       <div class="affirm flc">
@@ -60,7 +59,7 @@
          </router-link>
         </div>
       </section>
-      <good-list notloading="true" uri=""></good-list>
+      <good-list notloading="false" uri="homeGoods"></good-list>
     </mt-loadmore>
   </div>
 </template>
@@ -106,7 +105,7 @@
           this.hasdata = true;
           setTimeout(()=>{
             Indicator.close();
-          },500)
+          })
         }
       })
     }

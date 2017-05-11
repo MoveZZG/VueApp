@@ -8,6 +8,9 @@ import Login from '@/scripts/components/Login'
 import Register from '@/scripts/components/Register'
 import Lists from '@/scripts/components/Lists'
 import MyInfor from '@/scripts/components/MyInfor'
+import Sousuo from '@/scripts/components/Sousuo'
+import SearchList from '@/scripts/components/SearchList'
+
 Vue.use(Router)
 
 export default new Router({
@@ -18,19 +21,19 @@ export default new Router({
       redirect:'board',
       children:[
         {
-          path:'/board',
-          component:Board
+          path:'board',
+          component:Board,
         },
         {
-          path:'/search',
+          path:'search',
           component:Search
         },
         {
-          path:'/enternote',
+          path:'enternote',
           component:EnterNote
         },
         {
-          path:'/myinfo',
+          path:'myinfo',
           component:MyInfor
         }
       ]
@@ -43,6 +46,15 @@ export default new Router({
     },{
       path:'/lists/:title/id/:id',
       component:Lists
+    },{
+          path:'login',
+          component:Login
+    },{
+      path: '/Sousuo',
+      component: Sousuo
+    },{
+      path: '/chart/:title',
+      component: SearchList
     }
   ]
 })

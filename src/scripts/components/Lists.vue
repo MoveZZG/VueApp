@@ -44,6 +44,7 @@ export default {
     return{
       title:'',
       catId:1,
+      page:1,
       dataSource:[],
       allLoaded:false
     }
@@ -52,51 +53,48 @@ export default {
     loadTop:function(){
       let that=this;
       setTimeout(function(){
-      axiosUtil.get({
-        url:'api/goods/homeGoods/'+that.uri,
-        type:'get',
-        callback:(res)=>{
-          that.dataSource=(res.data.body.datas);
+        that.fenlei(1,function(res){
+          that.dataSource=res;
           that.$refs.loadmore.onTopLoaded();
-        }
-      })
-      },2000);
+        });
+      },1000);
     },
     loadBottom:function(){
       let that=this;
-      axiosUtil.get({
-        url:'api/goods/homeGoods/'+that.uri,
-        type:'get',
-        callback:(res)=>{
-          that.dataSource=(res.data.body.datas);
+      let page = ++this.page;
+      console.log(page);
+      setTimeout(function(){
+        that.fenlei(page,function(res){
+          that.dataSource=that.dataSource.concat(res);
           that.$refs.loadmore.onBottomLoaded();
-        }
-      })
+        });
+      },1000);
     },
     back:function(){
       // let that=this;
       this.$router.go(-1)
     },
-    fenlei:function(fl){
+    fenlei:function(page,fl){
       let that=this;
       axiosUtil.get({
-        url:'api/goods/catGoods?cat_id='+this.catId,
+        url: '/api/goods/catGoods?cat_id='+that.catId+'&page='+page,
         type:'get',
         callback:(res)=>{
-          that.dataSource=res.data.body.datas;
-          fl();
+          fl(res.data.body.datas);
         }
       })
     }
   },
   mounted:function(){
+    let that = this;
     this.title = this.$route.params.title;
     this.catId = this.$route.params.id;
     Indicator.open({
       text: '加载中',
       spinnerType: 'fading-circle'
     });
-    this.fenlei(function(){
+    this.fenlei(1,function(res){
+      that.dataSource=res;
       setTimeout(()=>{
         Indicator.close();
       },500)
