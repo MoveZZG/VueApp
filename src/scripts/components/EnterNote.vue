@@ -4,7 +4,7 @@
       <div class="note-sec">
         <p><button class="btn"><router-link class="btn1" to='/login'>登录</router-link></button><span>更多爆款,低价采购,马上登录吧!</span></p>
       </div>
-      <div class="note-list">
+      <!-- <div class="note-list">
         <dl v-for="(item,index) in dataSource.datas" v-bind:key="index">
           <dt><img :src="item.goods_thumb" alt=""></dt>
           <dd>
@@ -12,12 +12,15 @@
             <span>{{item.sell_count}}</span>
           </dd>
         </dl>
-      </div>
+      </div> -->
+      <good-list notloading="true"></good-list>
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
+import GoodList from './GoodList.vue'
+Vue.component('good-list', GoodList)
 import { Indicator } from 'mint-ui';
 import axiosUtil from '../utils/axios.js';
 export default {
