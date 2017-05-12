@@ -2,7 +2,9 @@
   <section  class="goodList">
     <ul class="note-list"  v-if="isShow">
       <li v-for="(item,index) in dataSource" v-bind:key="index">
-        <div class="goods-img"><img :src="item.goods_thumb" alt=""></div>
+        <div class="goods-img">
+            <img :src="item.goods_thumb" alt="">
+        </div>
         <div class="goods-info">
           <p class="good-name">{{item.goods_name}}</p>
           <div class="price">

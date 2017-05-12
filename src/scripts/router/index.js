@@ -10,13 +10,14 @@ import Lists from '@/scripts/components/Lists'
 import MyInfor from '@/scripts/components/MyInfor'
 import Sousuo from '@/scripts/components/Sousuo'
 import SearchList from '@/scripts/components/SearchList'
+import GoodInfo from '@/scripts/components/GoodInfo'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '',
       component: Index,
       redirect:'board',
       children:[
@@ -55,6 +56,9 @@ export default new Router({
     },{
       path: '/chart/:title',
       component: SearchList
+    },{
+      path: '/goodinfo/:id',
+      component: GoodInfo
     }
   ]
 })
