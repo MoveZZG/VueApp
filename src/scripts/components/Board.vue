@@ -42,7 +42,7 @@
       </section>
       <section class="jiugongge" v-for="(item,index) in dataSource.goods_jiugongge">
         <div class="left">
-         <router-link :to="item.left.url">
+         <router-link :to="`/lists/${item.left.name}/id/${item.left.paramValue}`">
            <img :src="item.left.img" alt="item.left.name">
          </router-link>
         </div>

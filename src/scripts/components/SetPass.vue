@@ -11,13 +11,16 @@
       </h2>
     </div>
     <p class="phone-title">
-      我们将发送验证码到你的手机上
+      验证码已经发送至{{phone}}
     </p>
     <p class="phone">
-      <label for="phone">手机号</label><input v-model='value' id="phone" type="text" name="" value="" placeholder='请填写注册的手机号码'>
+      <label for="phone">验证码</label><input v-model='code' id="code" type="text" name="" value="" placeholder='短信验证码'><span class="get-again" @click="getCode">{{time}}重新获取</span>
+    </p>
+    <p class="phone">
+      <label for="phone">设置密码</label></label><input v-model='value' id="phone" type="password" name="" value="" placeholder='6-12位字母/数字组合'>
     </p>
     <div class="btn-next">
-        <button name="button" @click="search">下一步</button>
+        <button name="button" @click="search">注册</button>
     </div>
   </section>
 </template>
@@ -25,6 +28,7 @@
 <script>
 import Vue from 'vue';
 import { MessageBox } from 'mint-ui';
+import axiosUtil from '../utils/axios';
 
 export default {
   methods:{
@@ -32,24 +36,60 @@ export default {
       this.$router.go(-1);
     },
     search(){
-      let phone = this.value;
-      let value = phone.trim()=='';
+      let that = this;
+      let value =this.value.trim()=='';
       if (value) {
-        MessageBox('提示','手机号不能为空');
+        MessageBox('提示', '密码不能为空');
         return;
-      }else if(!(/^1[34578]\d{9}$/.test(phone))){
-        MessageBox("提示","手机号码有误，请重填");
-        return;
-      }else{
-        window.location.href=`#/setpass/${this.value}`;
+      }else if(that.code==that.getCode){
+        MessageBox.alert('提示', '注册成功');
       }
+    },
+    getCode(){
+      let that = this;
+      if(this.canClick){
+        that.jishi();
+        let res= eval({"mobile":18801497118,"mobile_code":5893})
+        that.getCode = res.mobile_code;
+        // axiosUtil.get({
+        //   url:'mock/sms.php?mobile='+that.phone,
+        //   type:'get',
+        //   callback:(res)=>{
+        //     res = eval(res);
+        //     that.getCode = res.mobile_code;
+        //   }
+        // })
+      }
+    },
+    jishi(){
+      this.canClick = false;
+      let that = this,count = 60;
+      let time = setInterval(()=>{
+        if(count==1){
+          that.time ='';
+          this.canClick = true;
+          clearInterval(time);
+        }else{
+          count--;
+          that.time = count+'秒后';
+        }
+      },1000)
     }
   },
   data(){
     return{
-      title:"手机注册",
-      value:''
+      title:"设置登陆密码",
+      canClick:true,
+      phone:'',
+      value:'',
+      code:'',
+      getcode:'',
+      time:'60秒后'
     }
+  },
+  mounted:function(){
+    this.phone = this.$route.params.phone;
+    this.getCode();
   }
 }
 </script>
@@ -99,6 +139,7 @@ export default {
   padding: 0 .1rem;
   font-size: .17rem;
   line-height: .44rem;
+  margin:.01rem 0;
   label{
     height: 100%;
     width: .44rem;
@@ -120,5 +161,10 @@ export default {
     border: 0;
     border-radius: .05rem;
   }
+}
+.get-again{
+  font-size: .15rem;
+  color: #aaa;
+  text-indent: .1rem;
 }
 </style>

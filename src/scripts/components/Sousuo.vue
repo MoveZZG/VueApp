@@ -34,6 +34,7 @@
 <script>
 import Vue from 'vue';
 import axiosUtil from '../utils/axios';
+import { Indicator } from 'mint-ui';
 import { Search } from 'mint-ui';
 import { MessageBox } from 'mint-ui';
 Vue.component(Search.name, Search);
@@ -68,17 +69,25 @@ export default {
     }
   },
   mounted:function(){
+    Indicator.open({
+      text: '加载中...',
+      spinnerType: 'fading-circle'
+    });
     let that=this;
-    axiosUtil.get({
-      url:'api/home/category',
-      type:'get',
-      callback:(res)=>{
-        that.dataSource=res.data.body;
-        let item =  localStorage.getItem('searchList').split(',');
-        if(item!="")
-          that.searchList = that.searchList.concat(item);
-      }
-    })
+    // axiosUtil.get({
+    //   url:'api/home/category',
+    //   type:'get',
+    //   callback:(res)=>{
+    //     that.dataSource=res.data.body;
+    //
+    //   }
+    // })
+    let item =  localStorage.getItem('searchList').split(',');
+    if(item!="")
+    that.searchList = that.searchList.concat(item);
+    setTimeout(()=>{
+      Indicator.close();
+    },300)
   }
 }
 </script>

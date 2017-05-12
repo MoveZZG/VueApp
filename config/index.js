@@ -34,6 +34,20 @@ module.exports = {
         pathRewrite:{
           '^/api':''
         }
+      },
+      '/mock': {
+        target: 'http://localhost:80/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/mock': ''
+        }
+      },
+      '/register': {
+        target: 'http://localhost:3000/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/register': ''
+        }
       }
     },
     // CSS Sourcemaps off by default because relative paths are "buggy"

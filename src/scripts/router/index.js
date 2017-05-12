@@ -10,6 +10,7 @@ import Lists from '@/scripts/components/Lists'
 import MyInfor from '@/scripts/components/MyInfor'
 import Sousuo from '@/scripts/components/Sousuo'
 import SearchList from '@/scripts/components/SearchList'
+import SetPass from '@/scripts/components/SetPass'
 
 Vue.use(Router)
 
@@ -47,14 +48,15 @@ export default new Router({
       path:'/lists/:title/id/:id',
       component:Lists
     },{
-          path:'login',
-          component:Login
-    },{
       path: '/Sousuo',
       component: Sousuo
     },{
       path: '/chart/:title',
       component: SearchList
+    },{
+      path:'/setpass/:phone',
+      component:SetPass
     }
+
   ]
 })
