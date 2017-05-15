@@ -1,8 +1,10 @@
 <template lang="html">
   <div class="search">
-    <header class="yo-header-a">
-        <span class="yo-ico">&#xe511;</span><input type="text" name="" value="" placeholder="搜索商品" >
-    </header>
+    <router-link to="/Sousuo">
+      <header class="yo-header-a">
+        <span class="yo-ico">&#xe511;</span><input type="text" name="" value="" placeholder="搜索">
+      </header>
+    </router-link>
     <div class="c-type">
       <div class="category" v-for="(item,index) in dataSource.categorys" v-bind:key="index">
           <a @click="sea(item)" ><img :src="item.cat_img" alt=""></a>
@@ -20,9 +22,10 @@
 <script>
 import Vue from 'vue';
 import SearchList from './SearchList.vue';
-Vue.component('search-list',SearchList);
+import { Indicator } from 'mint-ui';
 import { Toast } from 'mint-ui';
 import axiosUtil from '../utils/axios';
+Vue.component('search-list',SearchList);
 export default {
   data(){
     return{
@@ -44,12 +47,19 @@ export default {
     }
   },
   mounted:function(){
+    Indicator.open({
+      text: '加载中...',
+      spinnerType: 'fading-circle'
+    });
     let that=this;
     axiosUtil.get({
       url:'api/home/category',
       type:'get',
       callback:(res)=>{
         that.dataSource=res.data.body;
+        setTimeout(()=>{
+          Indicator.close();
+        },300)
       }
     })
   },

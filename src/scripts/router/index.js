@@ -11,7 +11,7 @@ import MyInfor from '@/scripts/components/MyInfor'
 import Sousuo from '@/scripts/components/Sousuo'
 import SearchList from '@/scripts/components/SearchList'
 import GoodInfo from '@/scripts/components/GoodInfo'
-
+import SetPass from '@/scripts/components/SetPass'
 Vue.use(Router)
 
 export default new Router({
@@ -48,9 +48,6 @@ export default new Router({
       path:'/lists/:title/id/:id',
       component:Lists
     },{
-          path:'login',
-          component:Login
-    },{
       path: '/Sousuo',
       component: Sousuo
     },{
@@ -59,6 +56,10 @@ export default new Router({
     },{
       path: '/goodinfo/:id',
       component: GoodInfo
+    },{
+      path:'/setpass/:phone',
+      component:SetPass
     }
+
   ]
 })

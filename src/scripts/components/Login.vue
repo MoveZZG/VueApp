@@ -1,13 +1,13 @@
 <template lang="html">
   <div class="m-login">
     <header class="login-logo">
-      <span><img src="../../../static/images/details_close_1_icon.png" alt=""/></span>
+      <span @click="back"><img src="../../../static/images/details_close_1_icon.png" alt=""/></span>
     </header>
     <div class="login-form">
       <form class="" action="index.html" method="post">
-        <p>账号<input type="text" name="" value="" placeholder="手机号码"></p>
+        <p>账号<input type="text" v-model="value" name="" value="" placeholder="手机号码"></p>
         <p>密码<input type="password" name="" value="" placeholder="密码"></p>
-        <p class="login-p"><input type="button" name="" value="登录"></p>
+        <p class="login-p" @click="checkout"><input type="button" name="" value="登录" ></p>
         <p class="login-p login-p1"><input type="button" name="" value="微信一键登录"></p>
         <p class="login-p login-a"><a class="remeber" href="#">忘记密码？</a></p>
         <p class="login-p login-a login-regist"><a class="remeber no" href="#">还没有账号？</a><button class="btn"><router-link class="btn1" to='/register'>手机注册</router-link></button></p>
@@ -18,8 +18,37 @@
 
 <script>
 import Vue from 'vue';
-
+import { MessageBox } from 'mint-ui';
+import axiosUtil from '../utils/axios';
 export default {
+  methods:{
+    back(){
+      this.$router.go(-1);
+    },
+    checkout(){
+      let that = this;
+      let value =this.value.trim()=='';
+      if (value) {
+        MessageBox('提示', '密码不能为空');
+        return;
+      }else if(that.code==that.getCode){
+        MessageBox.alert('提示', '注册成功');
+      }
+    }
+  },
+  data(){
+    return{
+      title:"设置登陆密码",
+      canClick:true,
+      phone:'',
+      value:'',
+      code:'',
+      getcode:'',
+      time:'60秒后'
+    }
+  },
+  mounted:function(){
+  }
 }
 </script>
 
@@ -95,7 +124,7 @@ export default {
         }
         .btn{
             width:20%;
-            height:.3rem;
+            height:.05rem;
             text-align: center;
             line-height:.3rem;
             border-radius:.04rem;

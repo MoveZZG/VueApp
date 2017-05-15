@@ -52,6 +52,7 @@ export default {
   overflow: hidden;
   padding:.04rem 0;
   z-index: 9999;
+  border-bottom: 1px solid #eee;
   .flc{
     display: flex;
     width: .44rem;

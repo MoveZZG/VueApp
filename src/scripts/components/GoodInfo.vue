@@ -18,18 +18,10 @@
     </div>
     <div class="info-center">
       <div class="container">
-        <div class="op colors">
-          <p>颜色</p>
+        <div class="op" v-for="(item,index) in dataSource.attributes">
+          <p>{{item.attr_name}}</p>
           <ul>
-            <li ><a href="#">绿色</a></li>
-          </ul>
-        </div>
-        <div class="op size">
-          <p>尺码</p>
-          <ul>
-            <li><a href="#">M</a></li>
-            <li><a href="#">L</a></li>
-            <li><a href="#">XL</a></li>
+            <li v-for="(item1,index) in item.attrs"><a href="#">{{item1.attr_value}}</a></li>
           </ul>
         </div>
       </div>
@@ -39,6 +31,8 @@
     </div>
     <div class="info-detail">
       <p class="info-detail-title">继续拖动,查看文详情</p>
+    </div>
+    <div class="info-detail-con" v-html="dataRusult.goods_desc">
     </div>
     <div class="info-bottom">
       <ul>
@@ -59,7 +53,8 @@ export default {
   props:['goodinfo'],
   data(){
     return{
-      dataSource:{}
+      dataSource:{},
+      dataRusult:{}
     }
   },
   methods:{
@@ -79,7 +74,16 @@ export default {
         that.dataSource=res.data.body.datas;
         console.log(that.dataSource);
       }
-    })
+    });
+    axiosUtil.get({
+      url: '/api/goods/goodsDetail?goods_id='+that.goods_id,
+      type:'get',
+      callback:function(res){
+        that.dataRusult=res.data.body;
+        console.log(that.dataRusult);
+      }
+    });
+
   }
 }
 </script>
@@ -148,7 +152,7 @@ export default {
     }
   }
   .info-center{
-    height:2.22rem;
+    min-height:2.22rem;
     margin-top:.08rem;
     background: #fff;
     padding-left:.12rem;
@@ -156,9 +160,13 @@ export default {
     font-size:.14rem;
     .container{
       padding-top: .01rem;
+      min-height:1.58rem;
       .op{
+        padding-top: .15rem;
+        min-height: .72rem;
         ul{
-          margin-top: .2rem;
+          overflow: hidden;
+          margin-top: .1rem;
           li{
             width:18.7%;
             height:.29rem;
@@ -168,6 +176,7 @@ export default {
             text-align: center;
             line-height:.29rem;
             margin-right: .14rem;
+            margin-top:.1rem;
             a{
               color:#041018;
               text-decoration: underline;
@@ -176,22 +185,14 @@ export default {
         }
       }
     }
-    .colors{
-      min-height:.72rem;
-      margin-top: .15rem;
-    }
-    .size{
-      min-height:.72rem;
-      margin-top:.15rem;
-    }
     .number{
       min-height:.49rem;
-      margin-top: .2rem;
+      margin-top: .05rem;
       border-top:.01rem solid #fbfbfb;
-
       p{
         float: right;
         margin-right:-.14rem;
+        padding-top:.09rem;
         img{
           height:.31rem;
           margin-left:.21rem;
@@ -245,12 +246,16 @@ export default {
   }
   .info-detail{
     .info-detail-title{
-      height: 3rem;
+      min-height: .70rem;
       text-align: center;
       color:#5d5d5d;
       font-size:.16rem;
       margin-top:.33rem;
     }
+  }
+  .info-detail-con{
+    width:100%;
+    background: #fff
   }
 }
 </style>
