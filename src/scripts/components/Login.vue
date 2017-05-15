@@ -123,15 +123,13 @@ export default {
           text-decoration: none;
         }
         .btn{
-            width:20%;
+            width:30%;
             height:.3rem;
             text-align: center;
             line-height:.3rem;
             border-radius:.04rem;
             border:1px solid #fa615c;
             background:#fff;
-            padding-left:0;
-            margin-right:25%;
             .btn1{
                 color:#fa615c;
                 font-size:.1rem;

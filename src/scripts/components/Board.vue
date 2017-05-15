@@ -17,13 +17,13 @@
         <span>信息</span>
       </div>
     </div>
-    <mt-loadmore v-if="hasdata" :top-method="loadTop" :bottom-method="loadTop" :topDropText="'释放刷新'"  :bottom-all-loaded="allLoaded" :autoFill="false" ref="loadmore">
+    <mt-loadmore v-if="hasdata" :top-method="loadTop" :bottom-method="loadBottom" :topDropText="'释放刷新'"  :bottom-all-loaded="allLoaded" :autoFill="false" ref="loadmore">
       <section class="banner">
-        <div  v-for="(item,index) in dataSource.ads" >
-          <router-link  :to="item.ad_url">
-            <a><img :src="item.ad_img" alt=""></a>
-          </router-link>
-        </div>
+        <mt-swipe :auto="3000">
+          <mt-swipe-item v-for="(item,index) in dataSource.ads" :key="index">
+              <a :href="item.ad_url"><img :src="item.ad_img" alt=""></a>
+          </mt-swipe-item>
+        </mt-swipe>
       </section>
       <section class="fenlei">
           <dl class=""  v-for="(item,index) in dataSource.shortcuts">
@@ -59,20 +59,21 @@
          </router-link>
         </div>
       </section>
-      <good-list notloading="false" uri="homeGoods"></good-list>
+      <good-list notloading="false" :datalist="dataList" uri="homeGoods"></good-list>
     </mt-loadmore>
   </div>
 </template>
 
 <script>
   import Vue from 'vue';
-  import { Swipe, SwipeItem } from 'mint-ui';
+  import async from 'async'
   import axiosUtil from '../utils/axios';
+  import GoodList from './GoodList.vue'
   import { Loadmore } from 'mint-ui';
   import { Indicator } from 'mint-ui';
-  import GoodList from './GoodList.vue'
-  Vue.component('good-list', GoodList)
+  import { Swipe, SwipeItem } from 'mint-ui';
   Vue.component(Swipe.name, Swipe);
+  Vue.component('good-list', GoodList)
   Vue.component(SwipeItem.name, SwipeItem);
   Vue.component(Loadmore.name, Loadmore);
   export default {
@@ -80,15 +81,65 @@
       return{
         dataSource:{},
         allLoaded:false,
-        hasdata:false
+        hasdata:false,
+        pageIndex:1,
+        dataList:[]
       }
     },
     methods:{
       loadTop: function () {
         let that = this;
         setTimeout(function(){
+          that.initData(false);
           that.$refs.loadmore.onTopLoaded();
-        }.bind(this),3000)
+        }.bind(this),300)
+      },
+      loadBottom:function(){
+        this.pageIndex++;
+        let that = this;
+        this.getData(this.pageIndex,(res)=>{
+          // that.maxpage = res.data.body.maxpage;
+          // that.page = res.data.body.page;
+          that.dataList=that.dataList.concat(res.data.body.datas);
+          that.$refs.loadmore.onBottomLoaded();
+        })
+      },
+      getData(index,cb){
+        let that=this;
+        axiosUtil.get({
+          url:'api/goods/homeGoods/' + that.uri + ' ?page= ' + index,
+          type:'get',
+          callback:(res)=>{
+            cb(res);
+          }
+        });
+      },
+      initData(isRefresh){
+        let that = this;
+        async.parallel([
+            function(callback) {
+              axiosUtil.get({
+                url:'api/home/index3',
+                type:'get',
+                callback:(res)=>{
+                  callback(null,res.data.body)
+                }
+              });
+             },
+            function(callback) {
+              that.getData(1,function(res){
+                callback(null,res.data.body.datas)
+              });
+             }
+        ], function(err, results) {
+            // optional callback
+            that.dataSource = results[0];
+            that.dataList = results[1];
+            that.hasdata = true;
+            if(isRefresh){
+              Indicator.close();
+            };
+        });
       }
     },
     mounted:function(){
@@ -96,18 +147,7 @@
         text: '加载中...',
         spinnerType: 'fading-circle'
       });
-      let that = this;
-      axiosUtil.get({
-        url:'api/home/index3',
-        type:'get',
-        callback:(res)=>{
-          that.dataSource = res.data.body;
-          this.hasdata = true;
-          setTimeout(()=>{
-            Indicator.close();
-          })
-        }
-      })
+      this.initData(true);
     }
   }
 </script>
@@ -164,25 +204,19 @@
     }
   }
 }
-// .mint-swipe{
-//   height: 1.9rem;
-//   .mint-swipe-item{
-//     background: red;
-//     img{
-//       width: 100%;
-//     }
-//   }
-// }
+
 .banner{
   width: 100%;
-  div{
+  height: 2.3rem;
+  .mint-swipe{
     height: 100%;
-    a{
-      display: block;
+    // height: 2.3rem;
+    a{display: block;
       height: 100%;
-      img{
-        width: 100%;
-      }
+    }
+    img{
+      height: 100%;
+      width: 100%;
     }
   }
 }

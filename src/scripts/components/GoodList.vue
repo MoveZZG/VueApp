@@ -1,21 +1,20 @@
 <template lang="html">
   <section  class="goodList">
-    <ul class="note-list"  v-if="isShow">
-      <li v-for="(item,index) in dataSource" v-bind:key="index">
+    <ul class="note-list">
+      <li v-for="(item,index) in datalist" v-bind:key="index">
         <div class="goods-img"><img :src="item.goods_thumb" alt=""></div>
         <div class="goods-info">
           <p class="good-name">{{item.goods_name}}</p>
-          <div class="price">
-            <p class="market-price">￥{{item.market_price}}</p>
-            <p class="shop-price">￥{{item.shop_price}}</p>
+          <div class="bottom">
+            <div class="price">
+              <p class="market-price">￥{{item.market_price}}</p>
+              <p class="shop-price">￥{{item.shop_price}}</p>
+            </div>
+            <p class="sell-count">成交{{item.sell_count}}单</p>
           </div>
-          <p class="sell-count">成交{{item.sell_count}}单</p>
         </div>
       </li>
     </ul>
-    <p class="page-infinite-loading" v-if="loading">
-      <mt-spinner  type="double-bounce"></mt-spinner>
-    </p>
   </section>
 </template>
 <script>
@@ -26,33 +25,11 @@ Vue.component(Spinner.name, Spinner);
 export default {
   data(){
     return{
-      loading:false,
-      isShow:false,
-      maxpage:0,
-      page:1,
-      msg:'',
       dataSource:[]
     }
   },
-  props: ['notloading', 'uri'],
-  methods:{
-    getData(index){
-      let that=this;
-      axiosUtil.get({
-        url:'api/goods/homeGoods/' + that.uri + ' ?page= ' + index,
-        type:'get',
-        callback:(res)=>{
-          that.dataSource=that.dataSource.concat(res.data.body.datas);
-          that.maxpage = res.data.body.maxpage;
-          that.page = res.data.body.page;
-          that.isShow = true;
-          this.loading = false;
-        }
-      })
-    }
-  },
+  props: ['notloading', 'uri','datalist'],
   mounted:function(){
-    this.getData(this.page);
   }
 }
 </script>
@@ -73,17 +50,28 @@ export default {
         box-shadow:#ccc 0 0 .01rem;
         border: 1px #dedede solid;
         border-radius: .02rem;
-        img{
-          width: 100%
+        position: relative;
+        overflow: hidden;
+        .goods-img{
+          display: flex;
+          justify-content:center;
+          align-items: center;
+            img{
+              height: 2.08rem;
+            }
         }
         .goods-info{
+          flex:1;
           padding:0 .05rem;
           color:#cccccc;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
           .good-name{
             font-size: .13rem;
             padding-top: .1rem;
-            height: .56rem;
             color: #333333;
+            margin-bottom: .1rem;
           }
           .price{
             display: flex;

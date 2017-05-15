@@ -20,7 +20,7 @@
       <label for="phone">设置密码</label></label><input v-model='value' id="phone" type="password" name="" value="" placeholder='6-12位字母/数字组合'>
     </p>
     <div class="btn-next">
-        <button name="button" @click="search">注册</button>
+        <button name="button" @click="register">注册</button>
     </div>
   </section>
 </template>
@@ -35,14 +35,27 @@ export default {
     back(){
       this.$router.go(-1);
     },
-    search(){
+    register(){
       let that = this;
       let value =this.value.trim()=='';
       if (value) {
         MessageBox('提示', '密码不能为空');
         return;
       }else if(that.code==that.getCode){
-        MessageBox.alert('提示', '注册成功');
+        axiosUtil.get({
+          url:'http://datainfo.duapp.com/shopdata/userinfo.php',
+          type:'post',
+          data:{"status":"register","userID":that.phone,"password":that.value},
+          callback:(res)=>{
+            let msg = '';
+            if(res==1){
+              msg = '注册成功';
+            }else{
+              msg = '注册失败'
+            }
+            MessageBox.alert('提示', );
+          }
+        });
       }
     },
     getCode(){
@@ -50,7 +63,7 @@ export default {
       if(this.canClick){
         that.jishi();
         let res= eval({"mobile":18801497118,"mobile_code":5893})
-        that.getCode = res.mobile_code;
+        that.getcode = res.mobile_code;
         // axiosUtil.get({
         //   url:'mock/sms.php?mobile='+that.phone,
         //   type:'get',
@@ -62,7 +75,6 @@ export default {
       }
     },
     jishi(){
-      this.canClick = false;
       let that = this,count = 60;
       let time = setInterval(()=>{
         if(count==1){
@@ -139,6 +151,7 @@ export default {
   padding: 0 .1rem;
   font-size: .17rem;
   line-height: .44rem;
+  position: relative;
   margin:.01rem 0;
   label{
     height: 100%;
@@ -163,7 +176,10 @@ export default {
   }
 }
 .get-again{
-  font-size: .15rem;
+  position: absolute;
+  font-size: .1rem;
+  right: 0;
+  z-index: 999;
   color: #aaa;
   text-indent: .1rem;
 }

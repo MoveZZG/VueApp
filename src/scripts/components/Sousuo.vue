@@ -1,5 +1,5 @@
 <template lang="html">
-  <section class="sousuo">
+  <section class="container">
     <div class="yo-header-index">
       <div class="regret flc">
         <div class="back" @click="back">
@@ -21,7 +21,7 @@
         搜索历史
       </div>
       <div class="content">
-        <div v-for="(item,index) in searchList" class="title">
+        <div v-for="(item,index) in searchList" class="title" @click="selectItem($event)">
           {{item}}
         </div>
       </div>
@@ -62,10 +62,21 @@ export default {
         MessageBox('提示', '内容不能为空');
         return;
       }else{
-        this.searchList.push(this.value);
-        localStorage.setItem('searchList',this.searchList);
+        let flag = false;
+        for(var i = 0,l= this.searchList.length;i<l;i++){
+          if(this.value.trim()==this.searchList[i])
+            flag= true;
+        }
+        if(!flag){
+          this.searchList.push(this.value);
+          localStorage.setItem('searchList',this.searchList);
+        }
         window.location.href=`#/chart/${this.value}`;
       }
+    },
+    selectItem(e){
+      console.log(e.target.innerHTML.trim());
+      this.value=e.target.innerHTML.trim();
     }
   },
   mounted:function(){
@@ -93,6 +104,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .edit{
+    flex:1;
+    overflow-y: scroll;
+  }
+}
 .yo-header-index{
   width: 100%;
   display: flex;
@@ -126,22 +146,19 @@ export default {
   }
   .searchBox{
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
     background: #ececec;
     box-sizing: border-box;
-    border: .1px #e4f4f3 solid;
-    width: 2.6rem;
+    border: .1px #e4f4f3 solide;
     font-size: .15rem;
     border-radius: .05rem .05rem;
+    padding-left: .05rem;
     opacity: 0.8;
     input{
       color: #565656;
       background: transparent;
-      height: .23rem;
       border: 0;
-      margin: 0 .1rem;
     }
   }
 }
@@ -161,10 +178,10 @@ export default {
     button{
       display: block;
       border: 0;
+      margin: 0 auto;
       background: #eee;
       width: 2rem;
       height: .4rem;
-      margin: 0 auto;
     }
   }
 }

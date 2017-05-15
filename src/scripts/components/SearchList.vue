@@ -10,11 +10,12 @@
         {{title}}
       </h2>
     </div>
-    <good-list notloading="false" uri="" ></good-list>
+    <good-list notloading="false" :datalist='datalist'></good-list>
   </section>
 </template>
 <script>
 import Vue from 'vue';
+import axiosUtil from '../utils/axios';
 import GoodList from './GoodList.vue'
 Vue.component('good-list', GoodList)
 export default {
@@ -25,11 +26,20 @@ export default {
   },
   data(){
     return{
+      datalist:[],
       title:''
     }
   },
   mounted:function(){
-    this.title = this.$route.params.title
+    let that = this;
+    that.title = this.$route.params.title
+    axiosUtil.get({
+      url:'api/goods/search?key='+that.title,
+      type:'get',
+      callback:(res)=>{
+        that.datalist=that.datalist.concat(res.data.body.datas);
+      }
+    });
     console.log(this.title);
   }
 }
