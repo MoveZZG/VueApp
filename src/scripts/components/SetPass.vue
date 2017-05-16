@@ -14,7 +14,7 @@
       验证码已经发送至{{phone}}
     </p>
     <p class="phone">
-      <label for="phone">验证码</label><input v-model='code' id="code" type="text" name="" value="" placeholder='短信验证码'><span class="get-again" @click="getCode">{{time}}重新获取</span>
+      <label for="phone">验证码</label><input v-model='code' id="code" type="text" name="" value="" placeholder='短信验证码'><span class="get-again" @click="jishi">{{time}}重新获取</span>
     </p>
     <p class="phone">
       <label for="phone">设置密码</label></label><input v-model='value' id="phone" type="password" name="" value="" placeholder='6-12位字母/数字组合'>
@@ -36,56 +36,46 @@ export default {
       this.$router.go(-1);
     },
     register(){
+      console.log(this.code,this.getcode);
       let that = this;
       let value =this.value.trim()=='';
       if (value) {
         MessageBox('提示', '密码不能为空');
         return;
-      }else if(that.code==that.getCode){
+      }else if(that.code==that.getcode){
         axiosUtil.get({
-          url:'http://datainfo.duapp.com/shopdata/userinfo.php',
-          type:'post',
-          data:{"status":"register","userID":that.phone,"password":that.value},
+          url:'user/shopdata/userinfo.php?status=register&userID='+that.phone+'&password='+that.value,
+          type:'get',
+          // data:{},
           callback:(res)=>{
             let msg = '';
-            if(res==1){
+            if(res.data==1){
               msg = '注册成功';
             }else{
               msg = '注册失败'
             }
-            MessageBox.alert('提示', );
+            MessageBox.alert(msg,'提示');
           }
         });
       }
     },
-    getCode(){
-      let that = this;
-      if(this.canClick){
-        that.jishi();
-        let res= eval({"mobile":18801497118,"mobile_code":5893})
-        that.getcode = res.mobile_code;
-        // axiosUtil.get({
-        //   url:'mock/sms.php?mobile='+that.phone,
-        //   type:'get',
-        //   callback:(res)=>{
-        //     res = eval(res);
-        //     that.getCode = res.mobile_code;
-        //   }
-        // })
-      }
-    },
     jishi(){
       let that = this,count = 60;
-      let time = setInterval(()=>{
-        if(count==1){
-          that.time ='';
-          this.canClick = true;
-          clearInterval(time);
-        }else{
-          count--;
-          that.time = count+'秒后';
-        }
-      },1000)
+      if(this.canClick){
+        this.canClick = false;
+        let res= eval({"mobile":18801497118,"mobile_code":1111})
+        that.getcode = res.mobile_code;
+        let time = setInterval(()=>{
+          if(count==1){
+            that.time ='';
+            that.canClick = true;
+            clearInterval(time);
+          }else{
+            count--;
+            that.time = count+'秒后';
+          }
+        },1000)
+      }
     }
   },
   data(){
@@ -95,13 +85,13 @@ export default {
       phone:'',
       value:'',
       code:'',
-      getcode:'',
+      getcode:0,
       time:'60秒后'
     }
   },
   mounted:function(){
     this.phone = this.$route.params.phone;
-    this.getCode();
+    this.jishi();
   }
 }
 </script>
@@ -148,7 +138,7 @@ export default {
 .phone{
   height: .44rem;
   background-color: #fff;
-  padding: 0 .1rem;
+  padding-left:.1rem;
   font-size: .17rem;
   line-height: .44rem;
   position: relative;
@@ -176,11 +166,11 @@ export default {
   }
 }
 .get-again{
+  font-size: .1rem;
   position: absolute;
   font-size: .1rem;
   right: 0;
   z-index: 999;
   color: #aaa;
-  text-indent: .1rem;
 }
 </style>

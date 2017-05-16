@@ -36,17 +36,17 @@ module.exports = {
         }
       },
       '/mock': {
-        target: 'http://localhost:80/',
+        target: 'http://10.17.152.24:80/',
         changeOrigin: true,
         pathRewrite: {
           '^/mock': ''
         }
       },
-      '/register': {
-        target: 'http://localhost:3000/',
+      '/user': {
+        target: 'http://datainfo.duapp.com/',
         changeOrigin: true,
         pathRewrite: {
-          '^/register': ''
+          '^/user': ''
         }
       }
     },

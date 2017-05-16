@@ -16,17 +16,18 @@
     <div class="goodList">
       <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" ref="loadmore">
         <ul class="note-list">
-          <li v-for="(item,index) in dataSource" v-bind:key="index">
+          <router-link tag="li" :goodinfo="item" :to="`/goodinfo/${item.goods_id}`" v-for="(item,index) in dataSource" :key="index">
             <div class="goods-img"><img :src="item.goods_thumb" alt=""></div>
             <div class="goods-info">
               <p class="good-name">{{item.goods_name}}</p>
               <div class="price">
-                <p class="market-price">￥{{item.market_price}}</p>
-                <p class="shop-price">￥{{item.shop_price}}</p>
+                <p class="market-price">￥{{item.shop_price}}</p>
+                <p class="shop-price">￥{{item.market_price}}</p>
               </div>
               <p class="sell-count">成交{{item.sell_count}}单</p>
             </div>
           </li>
+          </router-link>
         </ul>
       </mt-loadmore>
     </div>
@@ -38,6 +39,8 @@ import Vue from 'vue';
 import { Loadmore } from 'mint-ui';
 Vue.component(Loadmore.name, Loadmore);
 import { Indicator } from 'mint-ui';
+import GoodInfo from './GoodInfo.vue';
+Vue.component('goodinfo',GoodInfo);
 import axiosUtil from '../utils/axios.js';
 export default {
   data(){

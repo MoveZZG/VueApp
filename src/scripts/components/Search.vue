@@ -8,7 +8,6 @@
     <div class="c-type">
       <div class="category" v-for="(item,index) in dataSource.categorys" v-bind:key="index">
           <a @click="sea(item)" ><img :src="item.cat_img" alt=""></a>
-        </router-link>
       </div>
     </div>
     <div class="c-type1">
