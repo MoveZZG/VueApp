@@ -5,6 +5,7 @@ export default {
     axios({
       method:param.type,
       url:param.url,
+      data:param.data||''
     })
     .then(function(res){
       param.callback(res);

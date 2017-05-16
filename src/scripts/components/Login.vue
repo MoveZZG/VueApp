@@ -6,7 +6,7 @@
     <div class="login-form">
       <form class="" action="index.html" method="post">
         <p>账号<input type="text" v-model="value" name="" value="" placeholder="手机号码"></p>
-        <p>密码<input type="password" name="" value="" placeholder="密码"></p>
+        <p>密码<input type="password" v-model="password" name="" value="" placeholder="密码"></p>
         <p class="login-p" @click="checkout"><input type="button" name="" value="登录" ></p>
         <p class="login-p login-p1"><input type="button" name="" value="微信一键登录"></p>
         <p class="login-p login-a"><a class="remeber" href="#">忘记密码？</a></p>
@@ -31,8 +31,22 @@ export default {
       if (value) {
         MessageBox('提示', '密码不能为空');
         return;
-      }else if(that.code==that.getCode){
-        MessageBox.alert('提示', '注册成功');
+      }else{
+        axiosUtil.get({
+          url:'user/shopdata/userinfo.php?status=login&userID='+that.value+'&password='+that.password,
+          type:'get',
+          callback:(res)=>{
+            let msg = '';
+            console.log(res.data);
+            if(res.data.userID!=''){
+              msg = '登录成功';
+              localStorage.setItem('username',value);
+            }else{
+              msg = '登录失败'
+            }
+            MessageBox.alert('提示', msg);
+          }
+        });
       }
     }
   },
@@ -44,7 +58,8 @@ export default {
       value:'',
       code:'',
       getcode:'',
-      time:'60秒后'
+      time:'60秒后',
+      password:''
     }
   },
   mounted:function(){
@@ -125,13 +140,13 @@ export default {
         .btn{
             width:20%;
             height:.05rem;
+            width:30%;
+            height:.3rem;
             text-align: center;
             line-height:.3rem;
             border-radius:.04rem;
             border:1px solid #fa615c;
             background:#fff;
-            padding-left:0;
-            margin-right:25%;
             .btn1{
                 color:#fa615c;
                 font-size:.1rem;

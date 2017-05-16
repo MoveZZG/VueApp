@@ -13,7 +13,7 @@
           </dd>
         </dl>
       </div> -->
-      <good-list notloading="true"></good-list>
+      <good-list notloading="true" :datalist = "dataList"></good-list>
   </div>
 </template>
 
@@ -26,6 +26,7 @@ import axiosUtil from '../utils/axios.js';
 export default {
   data(){
     return{
+      dataList:[],
       dataSource:{}
     }
   },
@@ -44,7 +45,14 @@ export default {
           Indicator.close();
         },500)
       }
-    })
+    });
+    axiosUtil.get({
+      url:'api/goods/homeGoods',
+      type:'get',
+      callback:(res)=>{
+        that.dataList=that.dataList.concat(res.data.body.datas);
+      }
+    });
   }
 }
 </script>
@@ -60,6 +68,7 @@ export default {
     line-height:.44rem;
     position:fixed;
     border-bottom: .01rem solid #d5d5d5;
+    z-index: 999;
   }
   .note-sec{
     height:1.33rem;

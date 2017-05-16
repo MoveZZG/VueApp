@@ -19,8 +19,8 @@
     <p class="phone">
       <label for="phone">设置密码</label></label><input v-model='value' id="phone" type="password" name="" value="" placeholder='6-12位字母/数字组合'>
     </p>
-    <div class="btn-next"  @click="search">
-        <button name="button">注册</button>
+    <div class="btn-next">
+        <button name="button" @click="register">注册</button>
     </div>
   </section>
 </template>
@@ -35,30 +35,36 @@ export default {
     back(){
       this.$router.go(-1);
     },
-    search(){
+    register(){
+      console.log(this.code,this.getcode);
       let that = this;
       let value =this.value.trim()=='';
       if (value) {
         MessageBox('提示', '密码不能为空');
         return;
-      }else if(that.code==that.getCode){
-        MessageBox.alert('提示', '注册成功');
+      }else if(that.code==that.getcode){
+        axiosUtil.get({
+          url:'user/shopdata/userinfo.php?status=register&userID='+that.phone+'&password='+that.value,
+          type:'get',
+          // data:{},
+          callback:(res)=>{
+            let msg = '';
+            if(res.data==1){
+              msg = '注册成功';
+            }else{
+              msg = '注册失败'
+            }
+            MessageBox.alert(msg,'提示');
+          }
+        });
       }
     },
     jishi(){
       let that = this,count = 60;
       if(this.canClick){
         this.canClick = false;
-        let res= eval({"mobile":18801497118,"mobile_code":5893})
-        that.getCode = res.mobile_code;
-        // axiosUtil.get({
-        //   url:'mock/sms.php?mobile='+that.phone,
-        //   type:'get',
-        //   callback:(res)=>{
-        //     console.log(res.data);
-        //     that.getCode = res.data.mobile_code;
-        //   }
-        // })
+        let res= eval({"mobile":18801497118,"mobile_code":1111})
+        that.getcode = res.mobile_code;
         let time = setInterval(()=>{
           if(count==1){
             that.time ='';
@@ -79,7 +85,7 @@ export default {
       phone:'',
       value:'',
       code:'',
-      getcode:'',
+      getcode:0,
       time:'60秒后'
     }
   },
@@ -135,6 +141,7 @@ export default {
   padding-left:.1rem;
   font-size: .17rem;
   line-height: .44rem;
+  position: relative;
   margin:.01rem 0;
   label{
     height: 100%;
@@ -160,6 +167,10 @@ export default {
 }
 .get-again{
   font-size: .1rem;
+  position: absolute;
+  font-size: .1rem;
+  right: 0;
+  z-index: 999;
   color: #aaa;
 }
 </style>

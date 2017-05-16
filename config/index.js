@@ -42,11 +42,11 @@ module.exports = {
           '^/mock': ''
         }
       },
-      '/register': {
-        target: 'http://localhost:3000/',
+      '/user': {
+        target: 'http://datainfo.duapp.com/',
         changeOrigin: true,
         pathRewrite: {
-          '^/register': ''
+          '^/user': ''
         }
       }
     },
