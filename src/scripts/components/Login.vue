@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import store from '../vuex/store';
 import Vue from 'vue';
 import { MessageBox } from 'mint-ui';
 import axiosUtil from '../utils/axios';
@@ -33,6 +34,10 @@ export default {
         return;
       }else if(that.code==that.getCode){
         MessageBox.alert('提示', '注册成功');
+        store.commit({
+          type:'login',
+          username:value
+        })
       }
     }
   },

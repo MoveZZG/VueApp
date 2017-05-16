@@ -2,17 +2,19 @@
   <section  class="goodList">
     <ul class="note-list">
       <li v-for="(item,index) in datalist" v-bind:key="index">
-        <div class="goods-img"><img :src="item.goods_thumb" alt=""></div>
-        <div class="goods-info">
-          <p class="good-name">{{item.goods_name}}</p>
-          <div class="bottom">
-            <div class="price">
-              <p class="market-price">￥{{item.market_price}}</p>
-              <p class="shop-price">￥{{item.shop_price}}</p>
+        <router-link  :to="item.url">
+          <div class="goods-img"><img :src="item.goods_thumb" alt=""></div>
+          <div class="goods-info">
+            <p class="good-name">{{item.goods_name}}</p>
+            <div class="bottom">
+              <div class="price">
+                <p class="market-price">￥{{item.market_price}}</p>
+                <p class="shop-price">￥{{item.shop_price}}</p>
+              </div>
+              <p class="sell-count">成交{{item.sell_count}}单</p>
             </div>
-            <p class="sell-count">成交{{item.sell_count}}单</p>
           </div>
-        </div>
+      </router-link>
       </li>
     </ul>
   </section>
