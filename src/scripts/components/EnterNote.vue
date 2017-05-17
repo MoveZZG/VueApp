@@ -37,20 +37,13 @@ export default {
       spinnerType: 'fading-circle'
     });
     axiosUtil.get({
-      url:'api/goods/homeGoods',
-      type:'get',
-      callback:(res)=>{
-        that.dataSource=res.data.body;
-        setTimeout(()=>{
-          Indicator.close();
-        },500)
-      }
-    });
-    axiosUtil.get({
-      url:'api/goods/homeGoods',
+      url:'http://ypwh.applinzi.com/home.php?type=home',
       type:'get',
       callback:(res)=>{
         that.dataList=that.dataList.concat(res.data.body.datas);
+        setTimeout(()=>{
+          Indicator.close();
+        },500)
       }
     });
   }

@@ -34,22 +34,22 @@ export default {
         return;
       }else{
         axiosUtil.get({
-          url:'user/shopdata/userinfo.php?status=login&userID='+that.value+'&password='+that.password,
+          url:'http://ypwh.applinzi.com/home.php?type=user&userStatus=login&userID='+that.value+'&userPass='+that.password,
           type:'get',
           callback:(res)=>{
             let msg = '';
-            console.log(res.data);
             if(res.data.userID!=''){
               msg = '登录成功';
-              localStorage.setItem('username',value);
+              localStorage.setItem('username',res.data);
+              window.location.href='#/myinfo';
+              store.commit({
+                type:'login',
+                username:res.data
+              })
             }else{
               msg = '登录失败'
             }
             MessageBox.alert('提示', msg);
-            store.commit({
-              type:'login',
-              username:value
-            })
           }
         });
       }

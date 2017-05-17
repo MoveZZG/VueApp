@@ -34,7 +34,7 @@ export default {
     let that = this;
     that.title = this.$route.params.title
     axiosUtil.get({
-      url:'api/goods/search?key='+that.title,
+      url:'http://ypwh.applinzi.com/home.php?type=search&parms='+that.title,
       type:'get',
       callback:(res)=>{
         that.datalist=that.datalist.concat(res.data.body.datas);

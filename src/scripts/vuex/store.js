@@ -1,15 +1,16 @@
-import Vue from 'vue';
+import Vue from 'vue'
 
-import Vuex from 'vuex';
+import Vuex from 'vuex'
 
-const  Vue = require('vue');
-
-let store = new Vuex.store({
+// const Vue = require('vue');
+Vue.use(Vuex);
+let store = new Vuex.Store({
   state:{
-    username:''
+    username:{}
   },
   mutations:{
     login:(state,payload)=>{
+      console.log(payload.username);
       state.username = payload.username;
     }
   }

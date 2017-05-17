@@ -59,7 +59,7 @@
          </router-link>
         </div>
       </section>
-      <good-list notloading="false" :datalist="dataList" uri="homeGoods"></good-list>
+      <good-list notloading="false" :datalist="dataList"></good-list>
     </mt-loadmore>
   </div>
 </template>
@@ -107,7 +107,7 @@
       getData(index,cb){
         let that=this;
         axiosUtil.get({
-          url:'api/goods/homeGoods/' + that.uri + ' ?page= ' + index,
+          url:'http://ypwh.applinzi.com/home.php?type=home&page=' + index,
           type:'get',
           callback:(res)=>{
             cb(res);
@@ -119,7 +119,7 @@
         async.parallel([
             function(callback) {
               axiosUtil.get({
-                url:'api/home/index3',
+                url:'http://ypwh.applinzi.com/home.php?type=index',
                 type:'get',
                 callback:(res)=>{
                   callback(null,res.data.body)

@@ -68,7 +68,7 @@ export default {
     console.log(that.goods_id);
     axiosUtil.get({
       // url: '/api/goods/goodsDetail?goods_id='+that.goods_id,
-      url:'api/goods/view?goods_id='+that.goods_id,
+      url:'http://ypwh.applinzi.com/home.php?type=goodsdetailcn&parms='+that.goods_id,
       type:'get',
       callback:function(res){
         that.dataSource=res.data.body.datas;

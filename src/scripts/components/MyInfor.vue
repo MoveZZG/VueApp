@@ -1,9 +1,13 @@
 <template lang="html">
   <div class="m-myinfo">
     <header>
-      <div class="info-top">
+      <div class="info-top" v-if="!isLogin">
         <a href="#"><img src="../../../static/images/user_myself_default.png" alt=""/></a>
-        <span>u188hyyzzg</span>
+        <span>未登录</span>
+      </div>
+      <div class="info-top" v-else>
+        <a href="#"><img :src="username[3]" alt=""/></a>
+        <span>{{username.userID}}</span>
       </div>
     </header>
     <div class="info-sec">
@@ -73,7 +77,23 @@
   </div>
 </template>
 <script>
+import store from '../vuex/store';
+import Vue from 'vue';
 export default {
+  data(){
+    return{
+      isLogin:false,
+      username:{}
+    }
+  },
+  mounted:function(){
+    let username = store.state.username;
+    console.log(username.userID);
+    if(username.userID!=''){
+        this.username = username;
+        this.isLogin = true;
+    }
+  }
 }
 </script>
 <style lang="scss">

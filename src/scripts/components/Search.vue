@@ -53,7 +53,7 @@ export default {
     });
     let that=this;
     axiosUtil.get({
-      url:'api/home/category',
+      url:'http://ypwh.applinzi.com/home.php?type=category',
       type:'get',
       callback:(res)=>{
         that.dataSource=res.data.body;

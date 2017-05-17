@@ -44,13 +44,14 @@ export default {
         return;
       }else if(that.code==that.getcode){
         axiosUtil.get({
-          url:'user/shopdata/userinfo.php?status=register&userID='+that.phone+'&password='+that.value,
+          url:'http://ypwh.applinzi.com/home.php?type=user&userStatus=register&userID='+that.phone+'&userPass='+that.value,
           type:'get',
           // data:{},
           callback:(res)=>{
             let msg = '';
             if(res.data==1){
               msg = '注册成功';
+              window.location.href='#/login';
             }else{
               msg = '注册失败'
             }
