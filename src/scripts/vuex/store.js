@@ -10,10 +10,9 @@ let store = new Vuex.Store({
   },
   mutations:{
     login:(state,payload)=>{
-      console.log(payload.username);
       state.username = payload.username;
     }
   }
-})
+});
 
 export default store

@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="m-login">
     <header class="login-logo">
-      <span @click="back"><img src="../../../static/images/details_close_1_icon.png" alt=""/></span>
+      <span @click="back"><img src="http://ypwh.applinzi.com/static/images/details_close_1_icon.png" alt=""/></span>
     </header>
     <div class="login-form">
       <form class="" action="index.html" method="post">
@@ -24,7 +24,7 @@ import axiosUtil from '../utils/axios';
 export default {
   methods:{
     back(){
-      this.$router.go(-1);
+      window.location.href='#/';
     },
     checkout(){
       let that = this;
@@ -98,12 +98,12 @@ export default {
         width:100%;
         font-size:.18rem;
         border-bottom:.01rem solid #f1f1f6;
-        line-height:.44rem;
         padding-left:2.7%;
         color:#2b2b2b;
         input{
           font-size: .14rem;
           padding-left:3.7%;
+          height: 100%;
           color:#cacad0;
           border:0;
         }

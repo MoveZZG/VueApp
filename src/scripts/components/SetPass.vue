@@ -64,18 +64,24 @@ export default {
       let that = this,count = 60;
       if(this.canClick){
         this.canClick = false;
-        let res= eval({"mobile":18801497118,"mobile_code":1111})
-        that.getcode = res.mobile_code;
-        let time = setInterval(()=>{
-          if(count==1){
-            that.time ='';
-            that.canClick = true;
-            clearInterval(time);
-          }else{
-            count--;
-            that.time = count+'秒后';
+        axiosUtil.get({
+          url:'http://ypwh.applinzi.com/sms.php?mobile='+that.phone,
+          type:'get',
+          callback:(res)=>{
+            res= eval(res.data);
+            that.getcode = res.mobile_code;
+            let time = setInterval(()=>{
+              if(count==1){
+                that.time ='';
+                that.canClick = true;
+                clearInterval(time);
+              }else{
+                count--;
+                that.time = count+'秒后';
+              }
+            },1000)
           }
-        },1000)
+        });
       }
     }
   },

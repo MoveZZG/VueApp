@@ -68,7 +68,7 @@ export default {
     console.log(that.goods_id);
     axiosUtil.get({
       // url: '/api/goods/goodsDetail?goods_id='+that.goods_id,
-      url:'http://ypwh.applinzi.com/home.php?type=goodsdetailcn&parms='+that.goods_id,
+      url:'http://ypwh.applinzi.com/home.php?type=goodsdetail&parms='+that.goods_id,
       type:'get',
       callback:function(res){
         that.dataSource=res.data.body.datas;
@@ -76,7 +76,7 @@ export default {
       }
     });
     axiosUtil.get({
-      url: '/api/goods/goodsDetail?goods_id='+that.goods_id,
+      url: 'http://ypwh.applinzi.com/home.php?type=goodsdetailcn&parms='+that.goods_id,
       type:'get',
       callback:function(res){
         that.dataRusult=res.data.body;
@@ -92,6 +92,7 @@ export default {
 .m-goodinfo{
   background:#e9e9e9;
   height:100%;
+  overflow-x: hidden;
   overflow-y: scroll;
   .yo-header-a{
     position: relative;

@@ -80,7 +80,7 @@ export default {
     fenlei:function(page,fl){
       let that=this;
       axiosUtil.get({
-        url: 'http://ypwh.applinzi.com/home.php?type=catgoods?parms='+that.catId+'&page='+page,
+        url: 'http://ypwh.applinzi.com/home.php?type=catgoods&parms='+that.catId+'&page='+page,
         type:'get',
         callback:(res)=>{
           fl(res.data.body.datas);

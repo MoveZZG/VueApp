@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="content" >
-    <div class="yo-header-index">
+    <div class="yo-header-index" id="myHead">
       <div class="regret flc">
         <span class="yo-ico">&#xe622;</span>
         <span>客服</span>
@@ -114,6 +114,18 @@
           }
         });
       },
+      touch(){
+       let top =  document.getElementById("container");
+       let head = document.getElementById("myHead");
+       if(head){
+         let height = head.clientHeight;
+         if(top.scrollTop>height){
+           document.getElementById("myHead").style.background="red";
+         }else{
+           document.getElementById("myHead").style.background="none";
+         }
+       }
+      },
       initData(isRefresh){
         let that = this;
         async.parallel([
@@ -148,6 +160,8 @@
         spinnerType: 'fading-circle'
       });
       this.initData(true);
+      let that=this;
+      document.addEventListener('touchmove',that.touch, false);
     }
   }
 </script>
@@ -161,8 +175,9 @@
   justify-content: center;
   background: transparent;
   overflow: hidden;
-  margin: .04rem 0;
+  // margin: .04rem 0;
   z-index: 9999;
+  transition: all 1s linear;
   .flc{
     display: flex;
     width: .44rem;

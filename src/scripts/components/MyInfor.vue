@@ -88,10 +88,13 @@ export default {
   },
   mounted:function(){
     let username = store.state.username;
-    console.log(username.userID);
-    if(username.userID!=''){
+    let isShow = username[0]||false;
+    console.log(isShow);
+    if(isShow){
         this.username = username;
         this.isLogin = true;
+    }else{
+      window.location.href='#/login';
     }
   }
 }
